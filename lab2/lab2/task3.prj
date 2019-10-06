@@ -1,5 +1,0 @@
-vhdl work "or_el.vhd"
-vhdl work "or3_el.vhd"
-vhdl work "not_el.vhd"
-vhdl work "and3_el.vhd"
-vhdl work "task3.vhd"

@@ -1,6 +1,0 @@
-vhdl isim_temp "or_el.vhd"
-vhdl isim_temp "not_el.vhd"
-vhdl isim_temp "and_el.vhd"
-vhdl isim_temp "task1.vhd"
-vhdl isim_temp "task2.vhd"
-vhdl isim_temp "task2T.vhd"
