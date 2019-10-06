@@ -1,0 +1,4 @@
+vhdl work "or_el.vhd"
+vhdl work "not_el.vhd"
+vhdl work "and_el.vhd"
+vhdl work "task1.vhd"

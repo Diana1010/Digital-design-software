@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   16:34:44 09/30/2019
+-- Create Date:   13:42:45 10/06/2019
 -- Design Name:   
--- Module Name:   E:/labs_Xilinx/Digital-design-software/lab2/lab2/task3T.vhd
+-- Module Name:   E:/labXilinxWork/lab2_2/lab2/task3T.vhd
 -- Project Name:  lab2
 -- Target Device:  
 -- Tool versions:  
@@ -57,31 +57,36 @@ ARCHITECTURE behavior OF task3T IS
  	--Outputs
    signal F1 : std_logic;
 	signal F2 : std_logic;
-	signal error : std_logic; 
+	signal error : std_logic;
+   -- No clocks detected in port list. Replace <clock> below with 
+   -- appropriate port name 
+ 
  
  
 BEGIN
  
-	
-   behavTest: task3 PORT MAP (
-          X => X,
-          Y => Y,
-          Z => Z,
-          F => F1
+	behavioral : entity Work.task3(Behavioral) 
+      PORT MAP (
+       X => X,
+       Y => Y,
+       Z => Z,
+       F => F1
+		
+        );
+      
+   structural : entity Work.task3(Struct) 
+      PORT MAP (
+			 X => X,
+			 Y => Y,
+			 Z => Z,
+			 F => F2
         );
 		  
-	structTest: task3 PORT MAP (
-          X => X,
-          Y => Y,
-          Z => Z,
-          F => F2
-        );
+	
 
    X <= not X after 2 ns;
-	Y <= not Y after 4 ns;
-	Z <= not Z after 8 ns;
-		
-	error <= F1 xor F2;
-   
-  
+   Y <= not Y after 4 ns;
+   Z <= not Z after 8 ns;
+	
+	error <= (F1 xor F2 );
 END;

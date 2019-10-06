@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   00:53:05 09/30/2019
+-- Create Date:   14:27:00 10/06/2019
 -- Design Name:   
--- Module Name:   E:/labs_Xilinx/Digital-design-software/lab2/lab2/task4T.vhd
+-- Module Name:   E:/labXilinxWork/lab2_2/lab2/task4T.vhd
 -- Project Name:  lab2
 -- Target Device:  
 -- Tool versions:  
@@ -41,64 +41,64 @@ ARCHITECTURE behavior OF task4T IS
  
     COMPONENT task4
     PORT(
-         A : IN  std_logic;
-         B : IN  std_logic;
+         A0 : IN  std_logic;
          A1 : IN  std_logic;
+         B0 : IN  std_logic;
          B1 : IN  std_logic;
-         P : OUT  std_logic;
-         S : OUT  std_logic;
-         S1 : OUT  std_logic
+         C : OUT  std_logic;
+         Z0 : OUT  std_logic;
+         Z1 : OUT  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal A : std_logic := '0';
-   signal B : std_logic := '0';
+   signal A0 : std_logic := '0';
    signal A1 : std_logic := '0';
+   signal B0 : std_logic := '0';
    signal B1 : std_logic := '0';
 
  	--Outputs
-   signal P_1 : std_logic;
-   signal S_1 : std_logic;
-   signal S1_1 : std_logic;
-	signal P_2 : std_logic;
-   signal S_2 : std_logic;
-   signal S1_2 : std_logic;
-	signal error : std_logic; 
- 
+   signal C_beh : std_logic;
+   signal Z0_beh : std_logic;
+   signal Z1_beh : std_logic;
+	signal C_str : std_logic;
+   signal Z0_str : std_logic;
+   signal Z1_str : std_logic;
+	signal error : std_logic;
    -- No clocks detected in port list. Replace <clock> below with 
    -- appropriate port name 
  
-  -- constant <clock>_period : time := 10 ns;
- 
 BEGIN
  
-	-- Instantiate the Unit Under Test (UUT)
-   behavior: task4 PORT MAP (
-          A => A,
-          B => B,
-          A1 => A1,
-          B1 => B1,
-          P => P_1,
-          S => S_1,
-          S1 => S1_1
+	behavioral : entity Work.task4(Behavioral) 
+      PORT MAP (
+       A0 => A0,
+       A1 => A1,
+       B0 => B0,
+       B1 => B1,
+		 Z0 => Z0_beh,
+		 Z1 => Z1_beh,
+		 C => C_beh
+        );
+      
+   structural : entity Work.task4(Struct) 
+      PORT MAP (
+			 A0 => A0,
+			 A1 => A1,
+			 B0 => B0,
+			 B1 => B1,
+			 Z0 => Z0_str,
+			 Z1 => Z1_str,
+			 C => C_str
         );
 		  
-	 struct: task4 PORT MAP (
-          A => A,
-          B => B,
-          A1 => A1,
-          B1 => B1,
-          P => P_2,
-          S => S_2,
-          S1 => S1_2
-        );
-		  
-		A <= not A after 2 ns;
-		B <= not B after 4 ns;
-		A1 <= not A1 after 8 ns;
-		B1 <= not B1 after 16 ns;
-			
-		error <= ((S1_1 xor S1_2) or (S_1 xor S_2) or (P_1 xor P_2));
+
+   A0 <= not A0 after 2 ns;
+   A1 <= not A1 after 4 ns;
+   B0 <= not B0 after 8 ns;
+	B1 <= not B1 after 16 ns;
+	
+	error <= (z0_beh xor Z0_str) or (Z1_beh xor Z1_str) or (C_beh xor C_str);
+
 END;

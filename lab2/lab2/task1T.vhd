@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   00:21:46 09/30/2019
+-- Create Date:   13:06:53 10/06/2019
 -- Design Name:   
--- Module Name:   E:/labs_Xilinx/Digital-design-software/lab2/lab2/task1T.vhd
+-- Module Name:   E:/labXilinxWork/lab2_2/lab2/task1T.vhd
 -- Project Name:  lab2
 -- Target Device:  
 -- Tool versions:  
@@ -44,84 +44,46 @@ ARCHITECTURE behavior OF task1T IS
          A : IN  std_logic;
          B : IN  std_logic;
          S : IN  std_logic;
-         z : OUT  std_logic
+         Z : OUT  std_logic
         );
     END COMPONENT;
     
 
-   --Inputs
+    --Inputs
    signal A : std_logic := '0';
    signal B : std_logic := '0';
    signal S : std_logic := '0';
 
  	--Outputs
-   signal z : std_logic;
+   signal Z1 : std_logic;
+	signal Z2 : std_logic;
+	signal error : std_logic;
    -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
- 
-   --constant <clock>_period : time := 10 ns;
+   -- appropriate port name  
  
 BEGIN
- 
-	-- Instantiate the Unit Under Test (UUT)
-   uut: task1 PORT MAP (
-          A => A,
-          B => B,
-          S => S,
-          z => z
+
+	behavioral : entity Work.task1(Behavioral) 
+      PORT MAP (
+       A => A,
+       B => B,
+       S => S,
+       Z => Z1
         );
+      
+   structural : entity Work.task1(Struct) 
+      PORT MAP (
+       A => A,
+       B => B,
+       S => S,
+       Z => Z2
+        );
+		  
+	
 
-   -- Clock process definitions
---   <clock>_process :process
---   begin
---		<clock> <= '0';
---		wait for <clock>_period/2;
---		<clock> <= '1';
---		wait for <clock>_period/2;
---   end process;
- 
+   A <= not A after 2 ns;
+   B <= not B after 4 ns;
+   S <= not S after 8 ns;
 
-   -- Stimulus process
-   stim_proc: process
-   begin		
-      -- hold reset state for 100 ns.
-     -- wait for 100 ns;	
-
-     -- wait for <clock>_period*10;
-
-      -- insert stimulus here 
-			wait for 50 ns;	
-				A<= '0';
-				B<= '0';
-				S<= '0';
-				
-				
-				wait for 50 ns;
-					S<= '1';
-				
-							wait for 50 ns;
-								S<= '0';
-								B<= '1';
-							wait for 50 ns; 
-									S<= '1';
-									
-									wait for 50 ns;
-									A<= '1';
-									S<= '0';
-									B<= '0';
-									
-									wait for 50 ns;
-									S<= '1';
-									
-										wait for 50 ns;
-										S<= '0';
-										B<= '1';
-										
-										wait for 50 ns;
-										S<='1';
-				
-
-      wait;
-   end process;
-
+	error <= (Z1 xor Z2);
 END;

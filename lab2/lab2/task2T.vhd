@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   00:25:57 09/30/2019
+-- Create Date:   13:14:18 10/06/2019
 -- Design Name:   
--- Module Name:   E:/labs_Xilinx/Digital-design-software/lab2/lab2/task2T.vhd
+-- Module Name:   E:/labXilinxWork/lab2_2/lab2/task2T.vhd
 -- Project Name:  lab2
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: task22
+-- VHDL Test Bench Created by ISE for module: task2
 -- 
 -- Dependencies:
 -- 
@@ -39,191 +39,66 @@ ARCHITECTURE behavior OF task2T IS
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT task22
+    COMPONENT task2
     PORT(
-         a : IN  std_logic;
-         b : IN  std_logic;
-         a1 : IN  std_logic;
-         b1 : IN  std_logic;
-         s : IN  std_logic;
-         z : OUT  std_logic;
-         z1 : OUT  std_logic
+         A : IN  std_logic;
+         B : IN  std_logic;
+         A1 : IN  std_logic;
+         B1 : IN  std_logic;
+         S : IN  std_logic;
+         Z : OUT  std_logic;
+         Z1 : OUT  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal a : std_logic := '0';
-   signal b : std_logic := '0';
-   signal a1 : std_logic := '0';
-   signal b1 : std_logic := '0';
-   signal s : std_logic := '0';
+   signal A : std_logic := '0';
+   signal B : std_logic := '0';
+   signal A1 : std_logic := '0';
+   signal B1 : std_logic := '0';
+   signal S : std_logic := '0';
 
  	--Outputs
-   signal z : std_logic;
-   signal z1 : std_logic;
+   signal Z_beh : std_logic;
+   signal Z1_beh : std_logic;
+	signal Z_str : std_logic;
+   signal Z1_str : std_logic;
+	signal error : std_logic;
    -- No clocks detected in port list. Replace <clock> below with 
    -- appropriate port name 
  
-  -- constant <clock>_period : time := 10 ns;
+	
  
 BEGIN
- 
-	-- Instantiate the Unit Under Test (UUT)
-   uut: task22 PORT MAP (
-          a => a,
-          b => b,
-          a1 => a1,
-          b1 => b1,
-          s => s,
-          z => z,
-          z1 => z1
+		behavioral : entity Work.task2(Behavioral) 
+      PORT MAP (
+       A => A,
+       B => B,
+       S => S,
+		 A1 => A1,
+       B1 => B1,
+       Z => Z_beh,
+		 Z1 => Z1_beh
         );
+      
+   structural : entity Work.task2(Struct) 
+      PORT MAP (
+       A => A,
+       B => B,
+       S => S,
+		 A1 => A1,
+       B1 => B1,
+       Z => Z_str,
+		 Z1 => Z1_str
+        );
+		  
+	error <= (Z_beh xor Z_str) or (Z1_beh xor Z1_str);
 
-   -- Clock process definitions
---   <clock>_process :process
---   begin
---		<clock> <= '0';
---		wait for <clock>_period/2;
---		<clock> <= '1';
---		wait for <clock>_period/2;
---   end process;
- 
-
-   -- Stimulus process
-   stim_proc: process
-   begin		
-      -- hold reset state for 100 ns.
-    --  wait for 100 ns;	
-
-     -- wait for <clock>_period*10;
-
-      -- insert stimulus here 
-		
-			wait for 50 ns;	
-		a<= '0';
-		b<= '0';
-		a1<= '0';
-		b1<= '0';
-		s<= '0';
+   A <= not A after 2 ns;
+   B <= not B after 4 ns;
+   S <= not S after 8 ns;
+	A1 <= not A1 after 16 ns;
+   B1 <= not B1 after 32 ns;
 	
-		
-		wait for 10 ns;
-			s<= '1';
-		
-					wait for 10 ns;
-						s<= '0';
-						b1<= '1';
-					wait for 10 ns; 
-							s<= '1';
-							
-							wait for 10 ns;
-							a1<= '1';
-							s<= '0';
-							b1<= '0';
-							
-							wait for 10 ns;
-							s<= '1';
-							
-								wait for 10 ns;
-								s<= '0';
-								b1<= '1';
-								
-								wait for 10 ns;
-								s<='1';
-								
-											wait for 10 ns;
-													a1<= '0';
-													s<= '0';
-													b1<= '0';
-													b<= '1';
-													
-													wait for 10 ns;
-													s<= '1';
-													
-														wait for 10 ns;
-														s<= '0';
-														b1<= '1';
-														
-														wait for 10 ns;
-														s<='1';
-														
-														wait for 10 ns;
-															a1<= '1';
-															b1<='0';
-															s <= '0';
-															
-															wait for 10 ns;
-															s <= '1';
-															
-															wait for 10 ns;
-																b1 <= '1';
-																s <= '0';
-															
-															wait for 10 ns;
-																	s <= '1';
-																	
-																	wait for 10 ns;
-																		a<='1';
-																		a1<= '0';
-																		s<= '0';
-																		b1<= '0';
-																		b<= '0';
-																				wait for 10 ns;
-									s<= '1';
-								
-											wait for 10 ns;
-												s<= '0';
-												b1<= '1';
-											wait for 10 ns; 
-													s<= '1';
-													
-													wait for 10 ns;
-													a1<= '1';
-													s<= '0';
-													b1<= '0';
-													
-													wait for 10 ns;
-													s<= '1';
-													
-														wait for 10 ns;
-														s<= '0';
-														b1<= '1';
-														
-														wait for 10 ns;
-														s<='1';
-														
-																	wait for 10 ns;
-																			a1<= '0';
-																			s<= '0';
-																			b1<= '0';
-																			b<= '1';
-																			
-																			wait for 10 ns;
-																			s<= '1';
-																			
-																				wait for 10 ns;
-																				s<= '0';
-																				b1<= '1';
-																				
-																				wait for 10 ns;
-																				s<='1';
-																				
-																				wait for 10 ns;
-																					a1<= '1';
-																					b1<='0';
-																					s <= '0';
-																					
-																					wait for 10 ns;
-																					s <= '1';
-																					
-																					wait for 10 ns;
-																						b1 <= '1';
-																						s <= '0';
-																					
-																					wait for 10 ns;
-																							s <= '1';
-      wait;
-   end process;
-
 END;

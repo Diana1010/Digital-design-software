@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    23:43:30 09/29/2019 
+-- Create Date:    12:01:21 10/06/2019 
 -- Design Name: 
 -- Module Name:    sum1 - Behavioral 
 -- Project Name: 
@@ -30,18 +30,20 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity sum1 is
-    Port ( A : in  STD_LOGIC;
-           B : in  STD_LOGIC;
-           P0 : in  STD_LOGIC;
-           P : out  STD_LOGIC;
-           S : out  STD_LOGIC);
+    Port ( A0 : in  STD_LOGIC;
+           B0 : in  STD_LOGIC;
+           S0 : out  STD_LOGIC;
+           P0 : out  STD_LOGIC);
 end sum1;
 
 architecture Behavioral of sum1 is
 
 begin
-	S <= ((A or B) and (not P0));
-	P<= (A and B);
+	S0 <= (A0 or B0) and (not(A0 and B0));
+	P0 <= A0 and B0;
+	
+	
+	
 
 end Behavioral;
 
