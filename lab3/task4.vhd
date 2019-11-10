@@ -39,7 +39,14 @@ end task4;
 architecture Behavioral of task4 is
 signal x : std_logic;
 begin
-   x <= D when E = '1';
+
+   process( D, E )
+   begin
+     if  E = '1' then
+        x <= D;
+     end if;
+   end process;
+  
 	Q <= x;
 	nQ <= not x;
 

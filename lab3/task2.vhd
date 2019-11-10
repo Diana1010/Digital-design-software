@@ -59,8 +59,12 @@ architecture Behavioral of task2 is
 signal nor1_el, nor2_el: std_logic;
 begin
 
-nor2_el <= R nor nor1_el;
-nor1_el <= S nor nor2_el;
+process(R, S)
+begin
+	nor2_el <= R nor nor1_el;
+   nor1_el <= S nor nor2_el;
+end process; 
+
 nQ <= nor1_el;
 Q <= nor2_el;
 

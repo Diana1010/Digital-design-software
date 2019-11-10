@@ -37,13 +37,18 @@ end task3;
 
 architecture Behavioral of task3 is
 
-signal nD, nor1_el, nor2_el: STD_LOGIC;
+signal data: STD_LOGIC;
 begin
-   nD <= not D;
-	nor2_el <= nD nor nor1_el;
-	nor1_el <= D nor nor2_el;
-	nQ <= nor1_el;
-	Q <= nor2_el;
+
+   process( D )
+   begin
+     if data /= D then
+        data <= D;
+     end if;
+   end process;
+	
+	nQ <= not data;
+	Q <= data;
 
 end Behavioral;
 
@@ -51,7 +56,7 @@ end Behavioral;
 
 architecture Struct of task3 is
 
-signal nor1_el, nor2_el, nD : std_logic;
+signal nD : std_logic;
 
 component task2
 	 Port ( R : in  STD_LOGIC;
