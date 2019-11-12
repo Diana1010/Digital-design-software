@@ -58,7 +58,7 @@ architecture Struct of task3 is
 
 signal nD : std_logic;
 
-component task2
+component task2_2
 	 Port ( R : in  STD_LOGIC;
            S : in  STD_LOGIC;
            Q : out  STD_LOGIC;
@@ -74,21 +74,25 @@ component invertor
 begin
 
 el1: invertor port map (D, nD);
-el2: task2 port map (nD, D, Q, nQ);
+el2: task2_2 port map (nD, D, Q, nQ);
 
 end Struct;
 
 architecture Param of task3 is
 
-signal nor1_el, nor2_el, nD: std_logic;
+signal data: std_logic;
 
 begin			
 		
-	nD <= not D;
-	nor2_el <= nD nor nor1_el after 5 ns;
-	nor1_el <= D nor nor2_el after 5 ns;
-	nQ <= transport nor1_el after 5 ns;
-	Q <= transport nor2_el after 5 ns;
+	 process( D )
+   begin
+     if data /= D then
+        data <= inertial D after 2 ns;
+     end if;
+   end process;
+   
+   Q <= transport data after 2 ns;
+   nQ <= transport not data after 2 ns;
 
 end Param;
 

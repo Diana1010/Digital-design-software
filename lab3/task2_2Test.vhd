@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   22:58:01 11/04/2019
+-- Create Date:   14:21:39 11/11/2019
 -- Design Name:   
--- Module Name:   E:/labXilinxWork/lab3/lab3/task2Test.vhd
+-- Module Name:   E:/labXilinxWork/lab3/lab3/task2_2Test.vhd
 -- Project Name:  lab3
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: task2
+-- VHDL Test Bench Created by ISE for module: task2_2
 -- 
 -- Dependencies:
 -- 
@@ -32,14 +32,14 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY task2Test IS
-END task2Test;
+ENTITY task2_2Test IS
+END task2_2Test;
  
-ARCHITECTURE behavior OF task2Test IS 
+ARCHITECTURE behavior OF task2_2Test IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT task2
+    COMPONENT task2_2
     PORT(
          R : IN  std_logic;
          S : IN  std_logic;
@@ -67,30 +67,28 @@ ARCHITECTURE behavior OF task2Test IS
  
 BEGIN
  
- 	struct: entity Work.task2(Struct) PORT MAP (
+	struct: entity Work.task2_2(Struct) PORT MAP (
           R => R,
           S => S,
           Q => Q_struct,
           nQ => nQ_struct
         );
 		  
-	 behav: entity Work.task2(Behavioral) PORT MAP (
+	 behav: entity Work.task2_2(Behavioral) PORT MAP (
           R => R,
           S => S,
           Q => Q_beh,
           nQ => nQ_beh
         );
 
-	param: entity Work.task2(Param) PORT MAP (
+	param: entity Work.task2_2(Param) PORT MAP (
           R => R,
           S => S,
           Q => Q_param,
           nQ => nQ_param
         );
 	
-	S <= not S after 30 ns;
-   R <= not R after 60 ns;
-
-   
+	S <= not S after 3 ns;
+   R <= not R after 6 ns;
 
 END;

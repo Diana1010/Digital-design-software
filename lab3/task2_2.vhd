@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    22:17:35 11/04/2019 
+-- Create Date:    14:10:20 11/11/2019 
 -- Design Name: 
--- Module Name:    task2 - Behavioral 
+-- Module Name:    task2_2 - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,14 +29,36 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity task2 is
+entity task2_2 is
     Port ( R : in  STD_LOGIC;
            S : in  STD_LOGIC;
            Q : out  STD_LOGIC;
            nQ : out  STD_LOGIC);
-end task2;
+end task2_2;
 
-architecture Struct of task2 is
+architecture Behavioral of task2_2 is
+
+signal data: std_logic;
+begin
+
+main:process(R, S)
+begin
+	if R = '1' then
+        data <= '0';
+     elsif S = '1' then
+        data <=  '1';
+     else
+        data <=  data;
+     end if;
+end process; 
+
+Q <= data;
+nQ <=  not data;
+
+end Behavioral;
+
+
+architecture Struct of task2_2 is
 
 component nor_element
 		port (
@@ -50,36 +72,31 @@ component nor_element
 begin
 
 el3 : nor_element port map (A => S, B => nor_el2, Q => nor_el1);
-nQ <= nor_el1;
 el4 : nor_element port map (A => R, B => nor_el1, Q => nor_el2);
+
+
 Q <= nor_el2;
+nQ <= nor_el1;
 end Struct;
 
-architecture Behavioral of task2 is
-signal nor1_el, nor2_el: std_logic;
-begin
 
-process(R, S)
-begin
-	nor2_el <= R nor nor1_el;
-   nor1_el <= S nor nor2_el;
-end process; 
+architecture Param of task2_2 is
 
-nQ <= nor1_el;
-Q <= nor2_el;
-
-
-end Behavioral;
-
-architecture Param of task2 is
-
-signal nor1_el, nor2_el: std_logic;
+signal data: std_logic;
 
 begin
 
-nor2_el <= R nor nor1_el after 2 ns;
-nor1_el <= S nor nor2_el after 2 ns;
-nQ <= transport nor1_el after 2 ns;
-Q <= transport nor2_el after 2 ns;
+main: process( R, S )
+   begin
+     if R = '1' then
+        data <= inertial '0' after 2 ns;
+     elsif S = '1' then
+        data <= inertial '1' after 2 ns;
+     else
+        data <= inertial data after 2 ns;
+     end if;
+   end process;
 
+   Q <= transport data after 2 ns;
+   nQ <= transport not data after 2 ns;
 end Param;
